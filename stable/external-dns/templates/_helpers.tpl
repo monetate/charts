@@ -120,7 +120,11 @@ aws_secret_access_key = {{ .Values.aws.credentials.secretKey }}
 [profile default]
 role_arn = {{ .Values.aws.assumeRoleArn }}
 region = {{ .Values.aws.region }}
+{{- if .Values.aws.credentials.accessKey }}
 source_profile = default
+{{- else -}}
+credential_source = Ec2InstanceMetadata
+{{- end -}}
 {{ end }}
 
 {{- define "external-dns.azure-credentials" -}}
